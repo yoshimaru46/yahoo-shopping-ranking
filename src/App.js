@@ -1,21 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import Ranking from './components/Ranking'
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <ul>
+          <li><Link to="/all">すべてのカテゴリ</Link></li>
+          <li><Link to="/category/2502">パソコン、周辺機器</Link></li>
+          <li><Link to="/category/10002">本、雑誌、コミック</Link></li>
+        </ul>
+
+        {/*
+          <Switch>: どれか一つのRouteにマッチしたらそれ以上マッチしない
+        */}
+        <Switch>
+          {/* 総合ランキングのルート */}
+          <Route path="/all" component={Ranking} />
+          {/* カテゴリID=1は総合なので /all にリダイレクト */}
+          <Route
+            path="/category/1"
+            render={() => <Redirect to="/all" />}
+          />
+          {/* 各カテゴリのランキングのルート */}
+          <Route
+            path="/category/:id"
+            render={
+              ({ match }) => <Ranking categoryId={match.params.id} />
+            }
+          />
+        </Switch>
       </div>
     );
   }
 }
-
-export default App;
