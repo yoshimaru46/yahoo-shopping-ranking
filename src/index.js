@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import * as reducers from './reducers';
-import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(
     combineReducers(reducers),
